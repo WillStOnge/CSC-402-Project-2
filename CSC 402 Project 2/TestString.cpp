@@ -13,6 +13,8 @@ Date: 12/30/19
 using namespace std;
 
 int main() {
+	// Test cases provided.
+
 	String str1;
 	String str2("constructed with a c-string literal");
 	const char* c_str{ "constructed with a c-string variable" };

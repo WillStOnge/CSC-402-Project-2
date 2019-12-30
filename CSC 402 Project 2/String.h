@@ -18,16 +18,19 @@ using namespace std;
 class String 
 {
 public:
+	// Constructors and destructor.
 	String(const char* str = "");
 	String(const String& str);
 	String(String&& a);
 	~String();
 
+	// Member operator overrides.
 	String& operator=(const String& other);
 	String& operator=(String&& other);
 	char& operator[](int i);
 	const char& operator[](int i) const;
 
+	// Miscellaneous fucntions. 
 	int length();
 	bool empty();
 	void print(ostream& out = cout) const;
@@ -36,8 +39,10 @@ public:
 	String& append(const char* s);
 
 private:
+	// Internal value.
 	char* value;
 };
 
+// Non-member operator overrides.
 ostream& operator<<(ostream& out, const String& value);
 String operator+(const String& lhs, const String& rhs);
