@@ -34,6 +34,11 @@ String::String(String&& str)
 	str.value = nullptr;
 }
 
+String::~String()
+{
+	delete value;
+}
+
 String& String::operator=(const String& other)
 {
 	char* newChar = new char[strlen(other.value)];

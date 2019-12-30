@@ -21,10 +21,7 @@ public:
 	String(const char* str = "");
 	String(const String& str);
 	String(String&& a);
-	~String()
-	{
-		delete value;
-	}
+	~String();
 
 	String& operator=(const String& other);
 	String& operator=(String&& other);
