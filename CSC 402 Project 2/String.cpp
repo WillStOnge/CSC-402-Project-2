@@ -12,31 +12,22 @@ Date: 12/30/19
 String::String(const char* str)
 {
 	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar.
-	char* newChar = new char[strlen(str) + 1];
-	strcpy(newChar, str);
-	// Deallocates and sets the value to the newChar.
-	delete value;
-	value = newChar;
+	value = new char[strlen(str) + 1];
+	strcpy(value, str);
 }
 
 String::String(const String& str)
 {
 	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar.
-	char* newChar = new char[strlen(str.value) + 1];
-	strcpy(newChar, str.value);
-	// Deallocates and sets the value to the newChar.
-	delete value;
-	value = newChar;
+	value = new char[strlen(str.value) + 1];
+	strcpy(value, str.value);
 }
 
 String::String(String&& str)
 {
-	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar.
-	char* newChar = new char[strlen(str.value) + 1];
-	strcpy(newChar, str.value);
-	// Deallocates and sets the value to the newChar and sets the parameters' value to a null pointer.
-	delete value;
-	value = newChar;
+	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar. Set paramters value to null.
+	value = new char[strlen(str.value) + 1];
+	strcpy(value, str.value);
 	str.value = nullptr;
 }
 
@@ -48,23 +39,19 @@ String::~String()
 
 String& String::operator=(const String& other)
 {
-	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar.
-	char* newChar = new char[strlen(other.value) + 1];
-	strcpy(newChar, other.value);
-	// Frees the internal value to the heap and sets the value to the newChar, then returns this instance.
+	// Frees the value and allocates a new char for the assignment. Returns a pointer to the instance.
 	delete value;
-	value = newChar;
+	value = new char[strlen(other.value) + 1];
+	strcpy(value, other.value);
 	return *this;
 }
 
 String& String::operator=(String&& other)
 {
-	// Allocates newChar with the length of the parameters' value and copies the parameters' value to the newChar.
-	char* newChar = new char[strlen(other.value) + 1];
-	strcpy(newChar, other.value);
-	// Frees the internal value to the heap and sets the value to the newChar, then returns this instance. Also makes the parameters' value pointer null.
+	// Frees the value and allocates a new char for the assignment then sets the parameters' value pointer to null. Returns a pointer to the instance.
 	delete value;
-	value = newChar;
+	value = new char[strlen(other.value) + 1];
+	strcpy(value, other.value);
 	other.value = nullptr;
 	return *this;
 }
@@ -96,7 +83,7 @@ String operator+(const String& lhs, const String& rhs)
 	return ret;
 }
 
-int String::length()
+int String::length() const
 {
 	// If the value is a null pointer, return 0 else return the output the length of the internal value.
 	if (value == nullptr)
@@ -104,10 +91,10 @@ int String::length()
 	return strlen(value);
 }
 
-bool String::empty()
+bool String::empty() const
 {
 	// If the length of the internal value is 0, return true and vise versa.
-	return length() == 0;
+	return strlen(value) == 0;
 }
 
 void String::print(ostream& out) const
@@ -120,29 +107,32 @@ void String::print(ostream& out) const
 void String::clear()
 {
 	// Set the internal value to an empty string.
-	value = (char*)"";
+	delete value;
+	value = new char[1];
 }
 
 String& String::append(const String& str)
 {
-	// Hold the internal value in a temperary variable.
+	// Hold the internal value in a temperary variable and frees the value.
 	char* temp = value;
 	// Allocate a new char based on the combined length of the old value and new value, then set the internal value to the new character.
-	value = new char[strlen(value) + strlen(str.value) + 1];
+	value = new char[strlen(temp) + strlen(str.value)];
 	// Move the strings into the internal value and return this instance of String.
 	strcpy(value, temp);
 	strcat(value, str.value);
+	delete temp;
 	return *this;
 }
 
 String& String::append(const char* s)
 {
-	// Hold the internal value in a temperary variable.
+	// Hold the internal value in a temperary variable and frees the value.
 	char* temp = value;
 	// Allocate a new char based on the combined length of the old value and new value, then set the internal value to the new character.
-	value = new char[strlen(value) + strlen(s) + 1];
+	value = new char[strlen(temp) + strlen(s)];
 	// Move the strings into the internal value and return this instance of String.
 	strcpy(value, temp);
 	strcat(value, s);
+	delete temp;
 	return *this;
 }

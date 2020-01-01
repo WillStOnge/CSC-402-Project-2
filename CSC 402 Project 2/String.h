@@ -12,16 +12,19 @@ Date: 12/30/19
 #endif
 
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
 class String 
 {
 public:
-	// Constructors and destructor.
+	// Constructors
 	String(const char* str = "");
 	String(const String& str);
 	String(String&& a);
+
+	// Destructor
 	~String();
 
 	// Member operator overrides.
@@ -30,16 +33,18 @@ public:
 	char& operator[](int i);
 	const char& operator[](int i) const;
 
-	// Miscellaneous fucntions. 
-	int length();
-	bool empty();
+	// Accessor fucntions. 
+	int length() const;
+	bool empty() const;
 	void print(ostream& out = cout) const;
+
+	// Mutator functions
 	void clear();
 	String& append(const String& str);
 	String& append(const char* s);
 
 private:
-	// Internal value.
+	// Data member.
 	char* value;
 };
 
