@@ -52,7 +52,7 @@ String& String::operator=(String&& other)
 	delete value;
 	value = new char[strlen(other.value) + 1];
 	strcpy(value, other.value);
-	other.value = nullptr;
+	other.value = NULL;
 	return *this;
 }
 
@@ -108,7 +108,8 @@ void String::clear()
 {
 	// Set the internal value to an empty string.
 	delete value;
-	value = new char[1];
+	value = new char[0];
+	strcpy(value, "");
 }
 
 String& String::append(const String& str)
